@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Used components
+ Monaco editor: https://github.com/microsoft/monaco-editor
+# NPM Docs
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

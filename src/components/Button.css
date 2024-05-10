@@ -1,0 +1,46 @@
+:root {
+    /* --primary: #fff; */
+    --primary: linear-gradient(#121213, #121213), linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)), linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+}
+
+.btn {
+    padding: 8px, 20px;
+    border-radius: 15px;
+    margin-right: 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn--primary {
+    background-color: var(--primary);
+    color: #910293;
+    border: 1px solid var(--primary);
+}
+
+.btn--primary {
+    background-color: transparent;
+    /* color: #fff; */
+    color: #F2358D;
+    padding: 8px, 20px;
+    border: 1px solid var(--primary);
+    transition: all 0.3s ease-out;
+}
+
+.btn--medium {
+    padding: 8px 20px;
+    font-size: 20px;
+}
+
+.btn--large {
+    padding: 12px 26px;
+    font-size: 20px;
+}
+
+.btn--medium:hover,
+.btn-large:hover {
+    /* background: #fff; */
+    background: var(--primary);
+    color: #ffffff;
+    transition: all 0.3s ease-out;
+}
