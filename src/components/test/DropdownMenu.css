@@ -1,0 +1,29 @@
+.dropdown-container {
+    position: relative;
+    /* Positioning for the menu */
+}
+
+.dropdown-button {
+    /* Style your button as needed */
+}
+
+.dropdown-menu {
+    position: absolute;
+    display: block;
+    list-style: none;
+    padding: 0;
+    background-color: black;
+    /* Black background */
+}
+
+.dropdown-item {
+    color: white;
+    /* White text */
+    padding: 10px 15px;
+    /* Add some padding for visual comfort */
+}
+
+.dropdown-item:hover {
+    background-color: gray;
+    /* Gray background on hover */
+}

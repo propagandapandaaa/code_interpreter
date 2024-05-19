@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import '@fortawesome/fontawesome-free/css/all.css';
 import './Navbar.css'
 import { Button } from './Button';
+import DropdownMenu from "./test/DropdownMenu";
 
 function Navbar() {
     const [click, setClick] = useState(false);
@@ -26,8 +27,9 @@ function Navbar() {
             <nav className="navbar">
                 <div className="navbar-container">
                     <Link to='/' className="navbar-logo">
-                        Code Interpreter <i className="fab fa-typo3"></i>
+                        Test Site <i className="fab fa-typo3"></i>
                     </Link>
+                    <DropdownMenu buttonText="Options" menuItems={["Profile", "Settings", "Logout"]} />
                     <div className="menu-icon" onClick={handleClick}>
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
