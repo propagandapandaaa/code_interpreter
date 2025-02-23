@@ -7,7 +7,7 @@
 
 .navbar {
     /* background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%); */
-    background: linear-gradient(90deg, #1a161a 0%, rgb(27, 26, 27) 100%);
+    background: linear-gradient(0deg, hsl(273, 26%, 7%) 0%, rgb(42, 17, 42) 100%);
     height: 80px;
     align-items: center;
     font-size: 1.2rem;
@@ -92,20 +92,17 @@
     color: #fff;
     text-decoration: none;
     padding: 10px 15px;
-    transition: all 0.3s ease-out;
-
+    transition: all 0.1s ease-out;
     border-radius: 10px;
+    position: relative;
 }
 
-
 .nav-links:hover {
-    /* background-color: #803982; */
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(196, 148, 197, 0.8),
+        0 0 15px rgba(196, 148, 197, 0.2);
 
-    background-color: var(--link-button);
     opacity: 1;
-    /* Change background color on hover */
-    border-radius: 15px;
-    /* Add border radius */
 }
 
 .fa-bars {
@@ -118,6 +115,52 @@
 
 .menu-icon {
     display: none;
+}
+
+/* Profile */
+.nav-profile-link {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.nav-profile-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Fallback for when there is no profile picture */
+.nav-profile-pic.default-profile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.logout-button {
+    color: #fff;
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: all 0.1s ease-out;
+    border-radius: 10px;
+    position: relative;
+    font-family: 'Space Grotesk';
+}
+
+.logout-button:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(196, 148, 197, 0.8),
+        0 0 15px rgba(196, 148, 197, 0.2);
 }
 
 @media screen and (max-width: 960px) {

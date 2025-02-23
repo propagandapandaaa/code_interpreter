@@ -1,7 +1,7 @@
 import React from 'react';
-import './LandingPage.css';
+import './Landing.css';
 
-function LandingPage() {
+function Landing() {
     return (
         <div className="landing-page-container">
             <h1 style={{ color: 'white' }}>Frogs.</h1>
@@ -12,4 +12,4 @@ function LandingPage() {
 }
 
 
-export default LandingPage;
+export default Landing;

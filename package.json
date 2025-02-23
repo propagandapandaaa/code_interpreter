@@ -9,19 +9,27 @@
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
     "ajv": "^8.13.0",
+    "axios": "^1.7.9",
+    "bunfig": "^0.7.0",
+    "crypto-browserify": "^3.12.1",
+    "dotenv": "^16.4.7",
     "eslint-config-react-app": "^7.0.1",
+    "firebase": "^10.12.4",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-native-walkthrough-tooltip": "^1.6.0",
     "react-router-dom": "^6.23.0",
     "react-scripts": "^5.0.1",
     "typescript": "^5.4.5",
     "web-vitals": "^3.5.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "bun run react-scripts start",
+    "build": "bun run react-scripts build",
+    "test": "bun run react-scripts test",
+    "eject": "bun run react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
