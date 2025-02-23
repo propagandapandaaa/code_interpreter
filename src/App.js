@@ -10,6 +10,7 @@ import CodeEditor from './components/tabs/CodeEditor';
 import Challenges from './components/tabs/Challenges';
 import './App.css';
 import Profile from './components/tabs/Profile';
+import HomePage from './components/tabs/HomePage';
 
 // Separate component for the authenticated content
 function AppContent() {
@@ -20,7 +21,7 @@ function AppContent() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Signup />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/editor/:challengeId" element={<Coding />} />
         <Route path="/codeeditor" element={<CodeEditor />} />
         <Route path="/sign-up" element={<Signup />} />

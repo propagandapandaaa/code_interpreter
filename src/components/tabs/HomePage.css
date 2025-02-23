@@ -1,0 +1,109 @@
+.homepage {
+    font-family: 'Space Grotesk', sans-serif;
+    color: white;
+    /* Ensure text is white to contrast with the dark background */
+}
+
+/* Hero Section */
+#hero {
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    color: white;
+    /* White text for hero section */
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #ccc;
+    /* Lighter text for description */
+    margin-bottom: 20px;
+}
+
+.cta-btn {
+    background-color: transparent;
+    color: #8e24aa;
+    padding: 12px 30px;
+    border: 2px solid #8e24aa;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #8e24aa;
+    color: white;
+}
+
+/* How It Works Section */
+#how-it-works {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#how-it-works h2 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.step {
+    max-width: 300px;
+    text-align: left;
+}
+
+.step h3 {
+    font-size: 1.4rem;
+    color: #8e24aa;
+}
+
+.step p {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+/* Footer Section */
+footer {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    position: fixed;
+    /* Keep it at the bottom of the screen */
+    bottom: 0;
+    width: 100%;
+    /* Ensure it spans the entire width */
+    background-color: transparent;
+    /* Remove the background */
+    margin: 0;
+    /* Remove any margin to ensure it's flush with the bottom */
+}
+
+footer p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+    .steps {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cta-btn {
+        font-size: 1.1rem;
+    }
+}

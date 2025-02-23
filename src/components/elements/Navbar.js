@@ -35,8 +35,8 @@ function Navbar() {
     return (
         <nav className="navbar">
             <div className="navbar-container">
-                <Link to='/' className="navbar-logo">
-                    Code Wars<i className="fab fa-typo3"></i>
+                <Link to='/home' className="navbar-logo">
+                    &lt;BitWars/&gt;
                 </Link>
                 <div className="menu-icon" onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />

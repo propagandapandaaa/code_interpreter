@@ -1,77 +1,131 @@
+/* Challenge Card Container */
 .challenges-container {
-    padding: 1rem;
+    padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    background-color: #1a1a1a;
+    /* Dark background to fit the theme */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Title */
 .challenges-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #8e24aa;
+    /* Accent color */
 }
 
+/* Input Group */
 .input-group {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
 }
 
+/* Challenge Input */
 .challenge-input {
     flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background-color: #333;
+    color: white;
+    transition: all 0.3s ease;
 }
 
+.challenge-input:focus {
+    border-color: #8e24aa;
+    outline: none;
+}
+
+/* Add Button */
 .add-button {
-    padding: 0.5rem 1rem;
-    background-color: #cdda45;
+    padding: 0.75rem 1.5rem;
+    background-color: #8e24aa;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
 .add-button:hover {
-    background-color: #dfd804;
+    background-color: #af48d8;
 }
 
+/* Challenges Grid */
 .challenges-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
+/* Challenge Card */
 .challenge-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 1px solid #444;
+    border-radius: 10px;
     overflow: hidden;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #222;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
+.challenge-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Card Content */
 .card-content {
-    padding: 1rem;
+    padding: 1.25rem;
 }
 
+/* Challenge Name */
 .challenge-name {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 1rem;
+    color: white;
 }
 
+/* Delete Button */
 .delete-button {
     padding: 0.5rem 1rem;
     background-color: #dc3545;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
 .delete-button:hover {
     background-color: #c82333;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .challenge-input {
+        font-size: 1rem;
+    }
+
+    .add-button {
+        font-size: 1rem;
+    }
+
+    .challenges-grid {
+        grid-template-columns: 1fr;
+    }
 }
