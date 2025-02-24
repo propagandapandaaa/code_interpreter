@@ -1,13 +1,17 @@
-/* Profile page styles */
 .profile-container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 8px;
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .profile-pic-container {
@@ -18,61 +22,71 @@
 }
 
 .profile-pic {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid white;
     margin-bottom: 10px;
 }
 
 .default-profile {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
+    background-color: #555;
     border-radius: 50%;
-    background-color: gray;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 16px;
-    font-weight: bold;
-}
-
-.upload-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .upload-btn input {
     margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.upload-btn button {
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.upload-btn button:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+}
+
+.user-details {
+    text-align: center;
 }
 
 .user-details p {
     margin: 5px 0;
+    font-size: 16px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #333;
+    border: 1px solid #444;
     color: white;
-    border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
     margin-top: 10px;
 }
 
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+button:hover {
+    background-color: #555;
 }
 
 .sign-out {
-    display: flex;
-    justify-content: center;
+    text-align: center;
     margin-top: 20px;
-}
-
-button:hover {
-    background-color: #45a049;
 }

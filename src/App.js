@@ -11,6 +11,8 @@ import Challenges from './components/tabs/Challenges';
 import './App.css';
 import Profile from './components/tabs/Profile';
 import HomePage from './components/tabs/HomePage';
+import Footer from './components/elements/Footer';
+import ChallengeDetail from './components/tabs/ChallengeDetail';
 
 // Separate component for the authenticated content
 function AppContent() {
@@ -28,7 +30,9 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/challenges" element={<Challenges />} />
+        <Route path="/challenge/:challengeId" element={<ChallengeDetail />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

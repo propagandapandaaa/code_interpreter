@@ -3,10 +3,11 @@
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #1a1a1a;
-    /* Dark background to fit the theme */
+    background-color: transparent;
+    /* Transparent background */
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Slight shadow to separate from dark background */
 }
 
 /* Title */
@@ -33,7 +34,8 @@
     border: 1px solid #444;
     border-radius: 8px;
     font-size: 1.1rem;
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.8);
+    /* Slightly transparent background */
     color: white;
     transition: all 0.3s ease;
 }
@@ -72,7 +74,8 @@
     border: 1px solid #444;
     border-radius: 10px;
     overflow: hidden;
-    background-color: #222;
+    background-color: rgba(34, 34, 34, 0.8);
+    /* Transparent background for cards */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }

@@ -1,26 +1,23 @@
+/* General Styling */
 .homepage {
     font-family: 'Space Grotesk', sans-serif;
     color: white;
-    /* Ensure text is white to contrast with the dark background */
 }
 
 /* Hero Section */
 #hero {
-    padding: 100px 0;
+    padding: 100px 20px;
     text-align: center;
 }
 
 .hero-content h1 {
     font-size: 3rem;
-    color: white;
-    /* White text for hero section */
     margin-bottom: 10px;
 }
 
 .hero-content p {
     font-size: 1.2rem;
     color: #ccc;
-    /* Lighter text for description */
     margin-bottom: 20px;
 }
 
@@ -41,69 +38,96 @@
     color: white;
 }
 
-/* How It Works Section */
-#how-it-works {
+/* Dashboard Section */
+#dashboard {
     padding: 50px 20px;
+    background-color: #1d1d1d;
     text-align: center;
 }
 
-#how-it-works h2 {
-    font-size: 2rem;
-    color: white;
+#dashboard h2 {
+    font-size: 2.5rem;
     margin-bottom: 30px;
 }
 
-.steps {
+.dashboard-info {
     display: flex;
     justify-content: center;
     gap: 30px;
     margin-top: 20px;
 }
 
-.step {
-    max-width: 300px;
-    text-align: left;
+.stat-card {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    text-align: center;
 }
 
-.step h3 {
-    font-size: 1.4rem;
+.stat-card h3 {
+    font-size: 1.5rem;
     color: #8e24aa;
+    margin-bottom: 10px;
 }
 
-.step p {
-    font-size: 1rem;
+.stat-card p {
+    font-size: 1.2rem;
     color: #ccc;
 }
 
-/* Footer Section */
-footer {
-    padding: 20px;
+/* Featured Challenges Section */
+#featured-challenges {
+    padding: 50px 20px;
     text-align: center;
-    color: white;
-    position: fixed;
-    /* Keep it at the bottom of the screen */
-    bottom: 0;
-    width: 100%;
-    /* Ensure it spans the entire width */
-    background-color: transparent;
-    /* Remove the background */
-    margin: 0;
-    /* Remove any margin to ensure it's flush with the bottom */
+    background-color: #1d1d1d;
 }
 
-footer p {
-    font-size: 1rem;
-    margin: 0;
+#featured-challenges h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
 }
 
-/* Responsiveness */
-@media screen and (max-width: 768px) {
-    .steps {
-        flex-direction: column;
-        gap: 20px;
-    }
+.challenges-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
 
-    .cta-btn {
-        font-size: 1.1rem;
-    }
+.challenge-card {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    text-align: center;
+}
+
+.challenge-card h3 {
+    font-size: 1.5rem;
+    color: #8e24aa;
+    margin-bottom: 10px;
+}
+
+.challenge-card p {
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+/* Community Section */
+#community {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #121212;
+}
+
+#community h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#community p {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 30px;
 }

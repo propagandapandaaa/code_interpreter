@@ -1,24 +1,54 @@
 import React, { useState } from 'react';
-import { auth } from '../../firebaseConfig.js';
+import { auth, db } from '../../firebaseConfig.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getDocs, collection, query, where } from 'firebase/firestore';
 import './Signup.css';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     const [error, setError] = useState(null);
 
     const handleSignup = async (e) => {
         e.preventDefault();
+        setError(null);
+
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            // Check if the username is already taken
+
+
+            const usernameQuery = query(collection(db, 'users'), where('username', '==', username));
+            const usernameSnapshot = await getDocs(usernameQuery);
+
+            if (!usernameSnapshot.empty) {
+                setError('Username is already taken. Please choose a different one.');
+                return;
+            }
+
+
+            // Create a new user with Firebase Auth
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Save user data to Firestore with default role "user"
+            await setDoc(doc(db, 'users', user.uid), {
+                email: user.email,
+                username: username,
+                role: 'user', // Default role set to "user"
+                createdAt: new Date(),
+            });
+
             alert('User registered successfully!');
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
-                console.log('Email is already in use. Please use a different email.');
+                setError('Email is already in use. Please use a different email.');
+            } else if (error.code === 'auth/weak-password') {
+                setError('Password should be at least 6 characters.');
             } else {
-                console.log(error.message);
+                setError(error.message);
             }
+            console.log(error);
         }
     };
 
@@ -32,6 +62,14 @@ const Signup = () => {
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className="signup-input"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         className="signup-input"
                         required
                     />

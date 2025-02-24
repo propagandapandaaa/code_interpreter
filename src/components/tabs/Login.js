@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
 import { auth } from '../../firebaseConfig.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { getDoc, doc } from 'firebase/firestore'; // Import Firestore methods
+import { db } from '../../firebaseConfig'; // Import Firestore db
 import './Login.css';  // Add your styles if needed
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-            alert('Logged in successfully!');
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Fetch the user role from Firestore
+            const userRef = doc(db, 'users', user.uid); // Assuming you store user data under the 'users' collection
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                console.log('User role:', userData.role); // Log the role to the console
+            } else {
+                console.log('User data not found.');
+            }
+
+            navigate('/challenges'); // Redirect to challenges page after login
         } catch (error) {
             if (error.code === 'auth/user-not-found') {
                 console.log('No user found with this email.');

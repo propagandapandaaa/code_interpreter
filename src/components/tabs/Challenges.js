@@ -37,6 +37,10 @@ const Challenges = () => {
         setChallenges(challengesList);
     };
 
+    const goToChallengeDetail = (challengeId) => {
+        navigate(`/challenge/${challengeId}`);
+    };
+
     const handleAddChallenge = async () => {
         if (newChallenge.trim() && maxParticipants > 0) {
             await addDoc(challengesCollection, {
@@ -165,6 +169,12 @@ const Challenges = () => {
                                         onClick={() => handleLeaveChallenge(challenge.id)}
                                     >
                                         Leave Challenge
+                                    </button>
+                                    <button
+                                        className="view-button"
+                                        onClick={() => goToChallengeDetail(challenge.id)}
+                                    >
+                                        View Details
                                     </button>
                                 </div>
                             ) : (
