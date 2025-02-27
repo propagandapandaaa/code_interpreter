@@ -22,6 +22,7 @@ const firebaseConfig = {
     measurementId: config.FIREBASE_MEASUREMENT_ID
 };
 
+console.log(firebaseConfig.storageBucket);
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);

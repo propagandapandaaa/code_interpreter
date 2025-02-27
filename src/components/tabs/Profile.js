@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../AuthProvider';
 import { getAuth, updateProfile } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Link } from 'react-router-dom';
+import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from 'firebase/storage';
 import './Profile.css';
 
 function Profile() {
@@ -11,8 +10,24 @@ function Profile() {
     const currentUser = auth.currentUser;
 
     const [newProfilePic, setNewProfilePic] = useState(null);
-    const [profilePicURL, setProfilePicURL] = useState(currentUser?.photoURL || "");
+    const [profilePicURL, setProfilePicURL] = useState("");
     const [loading, setLoading] = useState(false);
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        const fetchAuthToken = async () => {
+            if (currentUser) {
+                try {
+                    const token = await currentUser.getIdToken();
+                    setToken(token);
+                    console.log('Authorization Token:', token);
+                } catch (error) {
+                    console.error('Error fetching auth token:', error);
+                }
+            }
+        };
+        fetchAuthToken();
+    }, [currentUser]);
 
     useEffect(() => {
         const fetchProfilePic = async () => {
@@ -21,12 +36,22 @@ function Profile() {
                     const storage = getStorage();
                     const storageRef = ref(storage, `profilePics/${user.uid}.jpg`);
                     const url = await getDownloadURL(storageRef);
-                    setProfilePicURL(url);
+                    const metadata = await getMetadata(storageRef);
+                    const downloadToken = metadata?.customMetadata?.token;
+                    if (downloadToken) {
+                        setProfilePicURL(`${url}&token=${downloadToken}`);
+                    } else {
+                        setProfilePicURL(url);
+                    }
                 } catch (error) {
-                    console.error("Error fetching profile picture:", error);
+                    console.error('Error fetching profile picture:', error);
+                    setProfilePicURL('https://firebasestorage.googleapis.com/v0/b/code-1383c.firebasestorage.app/o/profilePics%2Fdefault.png?alt=media&token=d6f2abe7-2d9c-41d3-b5aa-b005a214c874');
                 }
+            } else {
+                setProfilePicURL('https://firebasestorage.googleapis.com/v0/b/code-1383c.firebasestorage.app/o/profilePics%2Fdefault.png?alt=media&token=d6f2abe7-2d9c-41d3-b5aa-b005a214c874');
             }
         };
+
         fetchProfilePic();
     }, [user]);
 
@@ -39,94 +64,34 @@ function Profile() {
         }
     };
 
-    const compressAndResizeImage = (file) => {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            const reader = new FileReader();
-
-            reader.onloadend = () => {
-                img.src = reader.result;
-            };
-
-            reader.onerror = reject;
-
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const MAX_WIDTH = 800;
-                const MAX_HEIGHT = 800;
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > MAX_WIDTH) {
-                        height = Math.round((height * MAX_WIDTH) / width);
-                        width = MAX_WIDTH;
-                    }
-                } else {
-                    if (height > MAX_HEIGHT) {
-                        width = Math.round((width * MAX_HEIGHT) / height);
-                        height = MAX_HEIGHT;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => resolve(blob), file.type, 0.8);
-            };
-        });
-    };
-
     const handleUpload = async () => {
-        if (newProfilePic) {
+        if (newProfilePic && currentUser) {
             try {
                 setLoading(true);
-
-                const compressedImage = await compressAndResizeImage(newProfilePic);
-
                 const storage = getStorage();
-                const storageRef = ref(storage, `profilePics/${currentUser.uid}.jpg`);
+                const fileName = `${currentUser.uid}.jpg`; // Ensure filename matches storage rules
+                const storageRef = ref(storage, `profilePics/${fileName}`);
 
-                // Upload the image with the correct content type
-                const metadata = {
-                    contentType: newProfilePic.type,
-                };
-                await uploadBytes(storageRef, compressedImage, metadata);
+                // Upload the image with authenticated context
+                await uploadBytes(storageRef, newProfilePic);
 
-                // Fetch the image URL without custom headers
+                // Fetch the download URL
                 const downloadURL = await getDownloadURL(storageRef);
+
+                // Update the user's profile with the new photo URL
                 await updateProfile(currentUser, { photoURL: downloadURL });
 
                 setProfilePicURL(downloadURL);
                 setNewProfilePic(null);
-
+                console.log('Upload successful!');
             } catch (error) {
-                console.error("Error processing or uploading the image: ", error);
-                alert(`Error: ${error.message}`);
+                console.error("Error uploading: ", error);
+                alert(`Upload failed: ${error.message}`);
             } finally {
                 setLoading(false);
             }
-        }
-    };
-
-    const handleSignOut = () => {
-        auth.signOut();
-    };
-
-    const handlePasswordChange = () => {
-        if (currentUser?.email) {
-            auth.sendPasswordResetEmail(currentUser.email)
-                .then(() => alert('Password reset email sent.'))
-                .catch((error) => {
-                    console.error("Error sending password reset email:", error);
-                    alert(`Error: ${error.message}`);
-                });
+        } else {
+            alert('No file selected or user not authenticated.');
         }
     };
 
@@ -134,29 +99,18 @@ function Profile() {
         <div className="profile-container">
             <h2>Your Profile</h2>
             <div className="profile-info">
-                <div className="profile-pic-container">
-                    {profilePicURL ? (
-                        <img src={`${profilePicURL}?alt=media`} alt="Profile" className="profile-pic" />
-                    ) : (
-                        <div className="profile-pic default-profile">No Image</div>
-                    )}
-                    <div className="upload-btn">
-                        <input type="file" accept="image/*" onChange={handleFileChange} />
-                        <button onClick={handleUpload} disabled={loading || !newProfilePic}>
-                            {loading ? 'Uploading...' : 'Upload New Picture'}
-                        </button>
-                    </div>
-                </div>
-
-                <div className="user-details">
-                    <p>Email: {currentUser?.email}</p>
-                    <p>Registered on: {currentUser?.metadata?.creationTime}</p>
-                    <button onClick={handlePasswordChange}>Change Password</button>
-                </div>
-            </div>
-
-            <div className="sign-out">
-                <button onClick={handleSignOut}>Sign Out</button>
+                <img
+                    src={profilePicURL}
+                    alt="Profile"
+                    className="profile-pic"
+                    onError={(e) => {
+                        e.target.src = `https://firebasestorage.googleapis.com/v0/b/code-1383c.firebasestorage.app/o/profilePics%2Fdefault.png?alt=media&token=${token}`;
+                    }}
+                />
+                <input type="file" accept="image/*" onChange={handleFileChange} />
+                <button onClick={handleUpload} disabled={loading || !newProfilePic}>
+                    {loading ? 'Uploading...' : 'Upload New Picture'}
+                </button>
             </div>
         </div>
     );
