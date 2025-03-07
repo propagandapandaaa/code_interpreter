@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../AuthProvider';
 import { getAuth, updateProfile } from 'firebase/auth';
+import { auth, db } from '../../firebaseConfig.js';
+import { doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from 'firebase/storage';
 import './Profile.css';
 
@@ -13,6 +15,8 @@ function Profile() {
     const [profilePicURL, setProfilePicURL] = useState("");
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(null);
+    const [username, setUsername] = useState('');
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchAuthToken = async () => {
@@ -28,6 +32,26 @@ function Profile() {
         };
         fetchAuthToken();
     }, [currentUser]);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', user.uid));
+                    if (userDoc.exists()) {
+                        setUsername(userDoc.data().username);
+                    } else {
+                        setError('User data not found.');
+                    }
+                } catch (error) {
+                    setError('Error fetching user data.');
+                }
+            }
+        });
+
+        // Cleanup the listener on component unmount
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const fetchProfilePic = async () => {
@@ -111,6 +135,7 @@ function Profile() {
                 <button onClick={handleUpload} disabled={loading || !newProfilePic}>
                     {loading ? 'Uploading...' : 'Upload New Picture'}
                 </button>
+                <h1>{username ? `${username}` : 'Username not found'}</h1>
             </div>
         </div>
     );

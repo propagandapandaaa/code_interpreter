@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { postRequest } from '../../api/apiService';
-import { saveCodeToChallenge, loadCodeForChallenge } from '../../api/codeService'; // Modified service
+import { saveCodeToChallenge, loadCodeForChallenge } from '../../api/codeService';
 import { auth } from '../../firebaseConfig';
-import { useParams } from 'react-router-dom';  // For getting challengeId from URL
+import { useParams } from 'react-router-dom';
 import './Coding.css';
 
 function Coding() {
-    const { challengeId } = useParams(); // Get challengeId from URL
+    const { challengeId } = useParams();
     const [code, setCode] = useState('// Edit your code here');
     const [output, setOutput] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [user, setUser] = useState(null);  // State to store authenticated user
 
-    // API route can be easily modified here
     const API_ROUTE = 'http://localhost:8000/api/execute';
+
+    useEffect(() => {
+        // Listen for authentication state changes
+        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+            setUser(currentUser);
+        });
+
+        return () => unsubscribe(); // Cleanup on unmount
+    }, []);
 
     const handleEditorChange = (value) => {
         if (value !== undefined) {
@@ -22,7 +31,6 @@ function Coding() {
         }
     };
 
-    // Execute code via API
     const handleExecuteClick = async () => {
         console.log('Editor Content:', code);
         setIsLoading(true);
@@ -36,22 +44,21 @@ function Coding() {
         setIsLoading(false);
     };
 
-    // Save code to Firebase in relation to the challenge
     const handleSaveClick = async () => {
-        const user = auth.currentUser;
         if (user && challengeId) {
-            await saveCodeToChallenge(user.uid, challengeId, code); // Save code for specific challenge
+            await saveCodeToChallenge(user.uid, challengeId, code);
             console.log('Code saved for challenge:', challengeId);
         } else {
             console.log('User not logged in or no challenge ID');
         }
     };
 
-    // Load code from Firebase for the specific challenge
     const handleLoadClick = async () => {
-        const user = auth.currentUser;
+        console.log('Challenge:', challengeId);
+        console.log('User:', user);
+
         if (user && challengeId) {
-            const loadedCode = await loadCodeForChallenge(user.uid, challengeId); // Load code for specific challenge
+            const loadedCode = await loadCodeForChallenge(user.uid, challengeId);
             setCode(loadedCode || '// No code found');
             console.log('Code loaded for challenge:', challengeId);
         } else {
@@ -59,10 +66,12 @@ function Coding() {
         }
     };
 
-    // Load code on component mount
+    // Load code when user authentication state changes and challengeId is available
     useEffect(() => {
-        handleLoadClick();
-    }, [challengeId]);
+        if (user && challengeId) {
+            handleLoadClick();
+        }
+    }, [user, challengeId]);
 
     return (
         <div className="code-editor-container">
@@ -80,8 +89,12 @@ function Coding() {
                 <button onClick={handleExecuteClick} disabled={isLoading}>
                     {isLoading ? 'Executing...' : 'Run Code'}
                 </button>
-                <button onClick={handleSaveClick}>Save Code</button>
-                <button onClick={handleLoadClick}>Load Code</button>
+                <button onClick={handleSaveClick} disabled={!user}>
+                    Save Code
+                </button>
+                <button onClick={handleLoadClick} disabled={!user}>
+                    Load Code
+                </button>
             </div>
 
             {output && (
